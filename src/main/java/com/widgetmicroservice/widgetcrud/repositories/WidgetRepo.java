@@ -1,9 +1,9 @@
 package com.widgetmicroservice.widgetcrud.repositories;
 
 import com.widgetmicroservice.widgetcrud.models.Widget;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "widgets", path = "widgets")
-public interface WidgetRepo extends PagingAndSortingRepository<Widget, Long> {
+@Repository
+public interface WidgetRepo extends JpaRepository<Widget, Long> {
 }
