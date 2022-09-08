@@ -2,6 +2,7 @@ package com.widgetmicroservice.widgetcrud.controllers;
 
 import com.widgetmicroservice.widgetcrud.exceptions.WidgetNotFound;
 import com.widgetmicroservice.widgetcrud.models.Widget;
+import com.widgetmicroservice.widgetcrud.models.WidgetReqBody;
 import com.widgetmicroservice.widgetcrud.services.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,8 @@ public class WidgetController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addWidget(@RequestBody Widget Widget){
-        widgetService.addWidget(Widget);
+    public void addWidget(@RequestBody WidgetReqBody widgetReqBody){
+        widgetService.addWidget(widgetReqBody);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -41,8 +42,8 @@ public class WidgetController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateWidget(@PathVariable Long id, @RequestBody Widget Widget) throws WidgetNotFound {
-        widgetService.updateWidgetById(id, Widget);
+    public void updateWidget(@PathVariable Long id, @RequestBody WidgetReqBody widgetReqBody) throws WidgetNotFound {
+        widgetService.updateWidgetById(id, widgetReqBody);
     }
 
 }
