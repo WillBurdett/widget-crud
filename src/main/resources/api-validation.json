@@ -1,4 +1,5 @@
 
+
 {
   "openapi": "3.0.1",
   "info": {
@@ -145,6 +146,10 @@
   "components": {
     "schemas": {
       "Widget": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -152,16 +157,24 @@
             "format": "int64"
           },
           "firstName": {
+            "maxLength": 2147483647,
+            "minLength": 2,
             "type": "string"
           },
           "lastName": {
+            "maxLength": 2147483647,
+            "minLength": 2,
             "type": "string"
           },
           "age": {
+            "maximum": 150,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
           "gender": {
+            "maxLength": 2147483647,
+            "minLength": 4,
             "type": "string",
             "enum": [
               "MALE",
@@ -170,10 +183,12 @@
             ]
           },
           "height": {
+            "minimum": 1,
             "type": "number",
             "format": "double"
           },
           "weight": {
+            "minimum": 1,
             "type": "number",
             "format": "double"
           }
