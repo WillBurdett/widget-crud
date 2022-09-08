@@ -1,5 +1,4 @@
 
-
 {
   "openapi": "3.0.1",
   "info": {
@@ -63,7 +62,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Widget"
+                "$ref": "#/components/schemas/WidgetReqBody"
               }
             }
           },
@@ -129,7 +128,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Widget"
+                "$ref": "#/components/schemas/WidgetReqBody"
               }
             }
           },
@@ -145,6 +144,50 @@
   },
   "components": {
     "schemas": {
+      "WidgetReqBody": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 2147483647,
+            "minLength": 2,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 2147483647,
+            "minLength": 2,
+            "type": "string"
+          },
+          "age": {
+            "maximum": 150,
+            "type": "integer",
+            "format": "int32"
+          },
+          "gender": {
+            "maxLength": 2147483647,
+            "minLength": 4,
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "height": {
+            "minimum": 1,
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "minimum": 1,
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
       "Widget": {
         "required": [
           "firstName",
