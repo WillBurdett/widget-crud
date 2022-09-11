@@ -25,7 +25,12 @@ public class WidgetService {
     }
 
     public Optional<Widget> getWidgetById(Long id) {
-        return widgetRepo.findById(id);
+        Optional<Widget> widgetById = widgetRepo.findById(id);
+        if (widgetById.isPresent()) {
+            return widgetById;
+        } else {
+            throw new WidgetNotFound("widget with id " + id + " not found");
+        }
     }
 
     public void addWidget(WidgetReqBody widgetReqBody) {
@@ -41,7 +46,12 @@ public class WidgetService {
     }
 
     public void deleteWidgetById(Long id) {
-        widgetRepo.deleteById(id);
+        Optional<Widget> widgetById = widgetRepo.findById(id);
+        if (widgetById.isPresent()) {
+            widgetRepo.deleteById(id);
+        } else {
+            throw new WidgetNotFound("widget with id " + id + " not found");
+        }
     }
 
     public void updateWidgetById(Long id, WidgetReqBody widgetReqBody) {
