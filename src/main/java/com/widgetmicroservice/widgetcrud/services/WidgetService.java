@@ -1,5 +1,6 @@
 package com.widgetmicroservice.widgetcrud.services;
 
+import com.widgetmicroservice.widgetcrud.exceptions.NoWidgetsFound;
 import com.widgetmicroservice.widgetcrud.exceptions.WidgetNotFound;
 import com.widgetmicroservice.widgetcrud.models.Widget;
 import com.widgetmicroservice.widgetcrud.models.WidgetReqBody;
@@ -21,7 +22,11 @@ public class WidgetService {
     }
 
     public List<Widget> getAllWidgets() {
-        return widgetRepo.findAll();
+        if (widgetRepo.findAll().size() == 0){
+            throw new NoWidgetsFound("no widgets in database");
+        } else {
+            return widgetRepo.findAll();
+        }
     }
 
     public Optional<Widget> getWidgetById(Long id) {
