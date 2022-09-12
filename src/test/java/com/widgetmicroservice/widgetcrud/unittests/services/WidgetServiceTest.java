@@ -13,10 +13,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringRunner.class)
@@ -55,6 +56,14 @@ public class WidgetServiceTest {
 
     @Test
     public void getWidgetById() {
+        // given
+        Widget expected = new Widget(1L, "Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
+        when(widgetRepo.findById(expected.getId())).thenReturn(Optional.of(expected));
+        // when
+        Optional<Widget> actual = undertest.getWidgetById(expected.getId());
+        // then
+        assertThat(actual).isEqualTo(Optional.of(expected));
+        verify(widgetRepo, times(1)).findById(expected.getId());
     }
 
     @Test
