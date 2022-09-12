@@ -22,10 +22,11 @@ public class WidgetService {
     }
 
     public List<Widget> getAllWidgets() {
-        if (widgetRepo.findAll().size() == 0){
+        List<Widget> allWidgets = widgetRepo.findAll();
+        if (allWidgets.size() == 0){
             throw new NoWidgetsFound("no widgets in database");
         } else {
-            return widgetRepo.findAll();
+            return allWidgets;
         }
     }
 
