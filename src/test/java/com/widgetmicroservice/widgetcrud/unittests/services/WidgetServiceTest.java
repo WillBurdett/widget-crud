@@ -1,6 +1,7 @@
 package com.widgetmicroservice.widgetcrud.unittests.services;
 
 import com.widgetmicroservice.widgetcrud.enums.Gender;
+import com.widgetmicroservice.widgetcrud.exceptions.NoWidgetsFound;
 import com.widgetmicroservice.widgetcrud.models.Widget;
 import com.widgetmicroservice.widgetcrud.repositories.WidgetRepo;
 import com.widgetmicroservice.widgetcrud.services.WidgetService;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 
@@ -37,6 +39,18 @@ public class WidgetServiceTest {
         List actual = undertest.getAllWidgets();
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+    @Test
+    public void getAllWidgets_ThrowsExceptionIfNoWidgetsOnRecord() {
+        // given
+        List emptyWidgetList = List.of();
+        when(widgetRepo.findAll()).thenReturn(emptyWidgetList);
+        // when
+        assertThatThrownBy(() -> {
+            undertest.getAllWidgets();
+            // then
+        }).isInstanceOf(NoWidgetsFound.class)
+                .hasMessage("no widgets in database");
     }
 
     @Test
