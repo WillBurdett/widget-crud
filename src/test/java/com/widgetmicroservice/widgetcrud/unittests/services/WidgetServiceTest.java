@@ -100,7 +100,14 @@ public class WidgetServiceTest {
     }
 
     @Test
-    public void deleteWidgetById() {
+    public void deleteWidgetById_HappyPath() {
+        // given
+        Widget widget = new Widget(1L,"Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
+        when(widgetRepo.findById(widget.getId())).thenReturn(Optional.of(widget));
+        // when
+        undertest.deleteWidgetById(1L);
+        // then
+        verify(widgetRepo, times(1)).deleteById(1L);
     }
 
     @Test
