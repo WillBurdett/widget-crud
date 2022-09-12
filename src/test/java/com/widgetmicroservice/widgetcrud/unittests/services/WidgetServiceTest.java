@@ -40,6 +40,7 @@ public class WidgetServiceTest {
         List actual = undertest.getAllWidgets();
         // then
         assertThat(actual).isEqualTo(expected);
+        verify(widgetRepo, times(1)).findAll();
     }
     @Test
     public void getAllWidgets_ThrowsExceptionIfNoWidgetsOnRecord() {
