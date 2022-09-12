@@ -126,5 +126,21 @@ public class WidgetServiceTest {
 
     @Test
     public void updateWidgetById() {
+        // given
+        Widget old = new Widget(1L, "Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
+        when(widgetRepo.findById(old.getId())).thenReturn(Optional.of(old));
+
+        // when
+        WidgetReqBody update = new WidgetReqBody("Sally", "Smith", 20, Gender.FEMALE, 150.0, 80.0);
+        undertest.updateWidgetById(old.getId(), update);
+        // then
+        verify(widgetRepo, times(1)).save(new Widget(
+                old.getId(),
+                update.getFirstName(),
+                update.getLastName(),
+                update.getAge(),
+                update.getGender(),
+                update.getHeight(),
+                update.getWeight()));
     }
 }
