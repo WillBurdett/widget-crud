@@ -111,6 +111,20 @@ public class WidgetServiceTest {
     }
 
     @Test
+    public void deleteWidgetById_ThrowsExceptionWhenWidgetNotFound() {
+        // given
+        Optional <Widget> expected = Optional.empty();
+        when(widgetRepo.findById(1L)).thenReturn(expected);
+        // when
+        assertThatThrownBy(() -> {
+            undertest.deleteWidgetById(1L);
+            // then
+        }).isInstanceOf(WidgetNotFound.class)
+                .hasMessage("widget with id 1 not found");
+        verify(widgetRepo, times(1)).findById(1L);
+    }
+
+    @Test
     public void updateWidgetById() {
     }
 }
