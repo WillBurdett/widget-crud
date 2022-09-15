@@ -15,13 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WidgetController.class)
@@ -34,7 +34,7 @@ public class WidgetControllerTest {
     private WidgetService widgetService;
 
     @Test
-    public void getAllWidgets() throws Exception {
+    public void getAllWidgets_HappyPath() throws Exception {
         // given
         Widget expected = new Widget(1L, "Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
         when(widgetService.getAllWidgets()).thenReturn(List.of(expected));
@@ -55,7 +55,23 @@ public class WidgetControllerTest {
     }
 
     @Test
-    public void getWidgetById() {
+    public void getWidgetById_HappyPath() throws Exception {
+        // given
+        Widget expected = new Widget(1L, "Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
+        when(widgetService.getWidgetById(1L)).thenReturn(Optional.of(expected));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/widgets/1").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.firstName", is("Bob")))
+                .andExpect(jsonPath("$.lastName", is("Smith")))
+                .andExpect(jsonPath("$.age", is(20)))
+                .andExpect(jsonPath("$.gender", is("MALE")))
+                .andExpect(jsonPath("$.height", is(150.0)))
+                .andExpect(jsonPath("$.weight", is(80.0)));
+
+        verify(widgetService, times(1)).getWidgetById(1L);
     }
 
     @Test
