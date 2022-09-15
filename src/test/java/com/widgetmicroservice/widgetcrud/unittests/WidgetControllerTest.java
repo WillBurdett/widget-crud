@@ -16,13 +16,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -80,7 +81,7 @@ public class WidgetControllerTest {
     }
 
     @Test
-    public void addWidget() throws Exception {
+    public void addWidget_HappyPath() throws Exception {
         // given
         WidgetReqBody expected = new WidgetReqBody("Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
         // when
@@ -90,10 +91,20 @@ public class WidgetControllerTest {
     }
 
     @Test
-    public void deleteWidgetById() {
+    public void deleteWidgetById_HappyPath() throws Exception {
+        // when
+        mockMvc.perform(delete("/widgets/1"));
+        // then
+        verify(widgetService, times(1)).deleteWidgetById(1L);
     }
 
     @Test
-    public void updateWidget() {
+    public void updateWidget_HappyPath() throws Exception {
+        // given
+        WidgetReqBody expected = new WidgetReqBody("Bob", "Smith", 20, Gender.MALE, 150.0, 80.0);
+        // when
+        mockMvc.perform(put("/widgets/1").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(expected)));
+        // then
+        verify(widgetService, times(1)).updateWidgetById(1L, expected);
     }
 }
