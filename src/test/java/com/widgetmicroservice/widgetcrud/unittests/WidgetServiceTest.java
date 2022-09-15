@@ -1,4 +1,4 @@
-package com.widgetmicroservice.widgetcrud.unittests.services;
+package com.widgetmicroservice.widgetcrud.unittests;
 
 import com.widgetmicroservice.widgetcrud.enums.Gender;
 import com.widgetmicroservice.widgetcrud.exceptions.NoWidgetsFound;

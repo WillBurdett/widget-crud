@@ -45,5 +45,4 @@ public class WidgetController {
     public void updateWidget(@PathVariable Long id, @RequestBody WidgetReqBody widgetReqBody) throws WidgetNotFound {
         widgetService.updateWidgetById(id, widgetReqBody);
     }
-
 }
