@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-public class OpenApiValidationConfig {
+public class OpenApiValidationConfig implements WebMvcConfigurer{
     @Bean
     public Filter validationFilter() {
         return new OpenApiValidationFilter(
@@ -33,5 +34,12 @@ public class OpenApiValidationConfig {
                 registry.addInterceptor(openApiValidationInterceptor);
             }
         };
+    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedHeaders("*")
+                .allowedMethods("*");
     }
 }
