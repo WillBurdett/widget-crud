@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-public class OpenApiValidationConfig implements WebMvcConfigurer{
+public class config implements WebMvcConfigurer{
     @Bean
     public Filter validationFilter() {
         return new OpenApiValidationFilter(
