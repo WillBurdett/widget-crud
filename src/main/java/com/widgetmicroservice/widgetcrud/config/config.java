@@ -24,6 +24,7 @@ public class config implements WebMvcConfigurer{
                 false  // enable response validation
         );
     }
+
     @Bean
     public WebMvcConfigurer addOpenApiValidationInterceptor(@Value("classpath:api-validation.json") final Resource apiSpecification) throws IOException {
         final EncodedResource specResource = new EncodedResource(apiSpecification, StandardCharsets.UTF_8);
@@ -35,6 +36,7 @@ public class config implements WebMvcConfigurer{
             }
         };
     }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
